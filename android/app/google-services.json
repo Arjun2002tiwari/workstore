@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701367434023",
+    "project_id": "to-do-app-bc7dc",
+    "storage_bucket": "to-do-app-bc7dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701367434023:android:d105944401b9b6adac8702",
+        "android_client_info": {
+          "package_name": "com.example.workstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701367434023-r131arbmj89ksl5e916j2jupb14b0bm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaobrkXqn_mbiLWQs1imqqHr0TBMPJdqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701367434023-r131arbmj89ksl5e916j2jupb14b0bm8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
