@@ -34,17 +34,19 @@ class _LoginState extends State<Login> {
       print("Result $reslut");
       print(reslut.displayName);
       print(reslut.email);
+      String name=reslut.displayName.toString();
+      String email=reslut.email.toString();
+      String photo=reslut.photoUrl.toString();
       // print(reslut.photoUrl);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+            return HomeScreen(Email:email,Name:name,Photo:photo);
+    }));
 
     } catch (error) {
       print(error);
     }
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-            return const HomeScreen();
-    }));
   }
 
-  late GoogleSignInAccount userobj;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
