@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'HomeScreen.dart';
 
@@ -16,6 +17,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+   
 
   googleLogin() async {
     print("googleLogin method Called");
@@ -37,9 +40,15 @@ class _LoginState extends State<Login> {
       String name=reslut.displayName.toString();
       String email=reslut.email.toString();
       String photo=reslut.photoUrl.toString();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('name', name);
+      prefs.setString('email', email);
+      prefs.setString('photo', photo);
+
       // print(reslut.photoUrl);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-            return HomeScreen(Email:email,Name:name,Photo:photo);
+            return HomeScreen(Email:prefs.getString('email')!,Name:prefs.getString('name')!,Photo:prefs.getString('photo')!);
     }));
 
     } catch (error) {

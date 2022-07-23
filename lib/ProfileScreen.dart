@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Login.dart';
 
@@ -62,6 +63,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   minimumSize: Size(MediaQuery.of(context).size.width*0.8,MediaQuery.of(context).size.height*0.08),
                 ),
               onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('name');
+                prefs.remove('email');
+                prefs.remove('photo');
+                print(prefs.getString('name'));
                 await GoogleSignIn().disconnect();
                 FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));

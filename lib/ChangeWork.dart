@@ -1,34 +1,38 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'Database.dart';
 
-class AddWork extends StatefulWidget {
+class ChangeWork extends StatefulWidget {
   String Email="";
-  AddWork({Key? key,required this.Email}) : super(key: key);
+  late DateTime Date;
+  String Work="";
+  String id="";
+
+  ChangeWork({Key? key,required this.Email, required this.Date, required this.Work, required this.id}) : super(key: key);
 
   @override
-  State<AddWork> createState() => _AddWorkState();
+  State<ChangeWork> createState() => _ChangeWorkState();
 }
 
-class _AddWorkState extends State<AddWork> {
-  DateTime today=DateTime.now();
+class _ChangeWorkState extends State<ChangeWork> {
   TextEditingController _dateinput=new TextEditingController();
   TextEditingController _work=new TextEditingController();
-  Database database=new Database();
+  DateTime today=DateTime.now();
 
   void initState() {
     super.initState();
-    _dateinput.text='${today.day}-${today.month}-${today.year}';
+    _dateinput.text='${widget.Date.day}-${widget.Date.month}-${widget.Date.year}';
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Work",style:TextStyle(fontSize: 30)),
+        title: Text("Change Work",style:TextStyle(fontSize: 30)),
         backgroundColor: Colors.pink[800],
       ),
     body: Center(
@@ -42,7 +46,7 @@ class _AddWorkState extends State<AddWork> {
               height:MediaQuery.of(context).size.height*0.1,
             ),
             Center(
-            child:Text("Add Work",style:TextStyle(fontSize: 40,color:Colors.blue[900],fontWeight: FontWeight.bold)),
+            child:Text("Change Work",style:TextStyle(fontSize: 40,color:Colors.blue[900],fontWeight: FontWeight.bold)),
             ),
             SizedBox(
               height:30,
@@ -51,6 +55,7 @@ class _AddWorkState extends State<AddWork> {
               controller:_work,
               decoration: InputDecoration(
                 labelText: "Work Name",
+                hintText:widget.Work,
                 labelStyle: TextStyle(fontSize: 20,color:Colors.pink[800],fontWeight: FontWeight.bold),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -109,7 +114,10 @@ class _AddWorkState extends State<AddWork> {
                     minimumSize: Size(MediaQuery.of(context).size.width/3,MediaQuery.of(context).size.height/15),
                   ),
                 onPressed: (){
-                  database.uploadWork(_work.text,widget.Email,today);
+                  FirebaseFirestore.instance.collection('Work').doc(widget.Email).collection('worklist').doc(widget.id).update({
+                    'Work': _work.text,
+                    'Date': today,
+                  });
                   Navigator.pop(context);
                 }, 
                 child:Text("Create",style:TextStyle(fontSize:20,color:Colors.white,fontWeight:FontWeight.bold)),
